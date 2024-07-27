@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  web1:
+    build: .
+    ports:
+      - "5005:5005"
+    volumes:
+      - .:/app
+    environment:
+      FLASK_ENV: development  # Added space after the colon for consistency
+
+  web2:
+    build: .
+    ports:
+     - "5007:5007"
+    command: python connect.py
+    networks:
+      - my-network
+    
+
+
+  web3:
+    build: .
+    ports:
+      - "5008:5008"
+    volumes:
+      - .:/app
+    command: python mongoapp.py
+    networks:
+      - my-network
+
+networks:
+  my-network:
+     driver: bridge    
